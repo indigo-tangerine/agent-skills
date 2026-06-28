@@ -30,7 +30,7 @@ while IFS= read -r -d '' md; do
   check_front_matter "$md"
 done < <(find skills plugins -type f -name '*.md' -print0)
 
-broken_links="$(find . -type l ! -exec test -e {} \; -print)"
+broken_links="$(find . -xtype l -print)"
 if [[ -n "$broken_links" ]]; then
   echo "Found broken symlinks:" >&2
   echo "$broken_links" >&2
