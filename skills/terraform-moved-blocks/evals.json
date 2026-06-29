@@ -12,7 +12,7 @@
     },
     {
       "name": "flags true deletes and asks for confirmation",
-      "prompt": "Here is my plan: aws_iam_role.deprecated will be destroyed. This was a resource I intentionally removed.",
+      "prompt": "Here is my plan: aws_iam_role.deprecated will be destroyed.",
       "must_contain": ["intentional"]
     }
   ]
