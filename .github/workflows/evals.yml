@@ -28,9 +28,6 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Run evals
         env:
           GITHUB_TOKEN: ${{ github.token }}

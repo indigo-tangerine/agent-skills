@@ -5,8 +5,5 @@
   "scripts": {
     "validate": "node scripts/validate-skills.js",
     "evals": "node scripts/run-evals.js"
-  },
-  "devDependencies": {
-    "openai": "^4.0.0"
   }
 }

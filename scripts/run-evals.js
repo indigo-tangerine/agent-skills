@@ -1,47 +1,52 @@
 #!/usr/bin/env node
 'use strict';
 
-const { OpenAI } = require('openai');
-const fs         = require('fs');
-const path       = require('path');
+const fs   = require('fs');
+const path = require('path');
 
 const SKILLS_DIR = path.resolve(__dirname, '..', 'skills');
 const MODEL      = process.env.EVAL_MODEL || 'gpt-4o-mini';
-const client     = new OpenAI({
-  baseURL: 'https://models.inference.ai.azure.com',
-  apiKey:  process.env.GITHUB_TOKEN,
-});
+const ENDPOINT   = 'https://models.inference.ai.azure.com/chat/completions';
 
-const FILTER = process.argv[2]; // optional: node run-evals.js <skill-name>
+const FILTER = process.argv[2];
 
-async function runScenario(skillName, scenario, skillContent) {
+async function callModel(messages) {
+  const res = await fetch(ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ model: MODEL, max_tokens: 1024, messages }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => '(no body)');
+    throw new Error(`HTTP ${res.status} ${res.statusText}: ${body}`);
+  }
+
+  const data = await res.json();
+  return data.choices[0].message.content;
+}
+
+async function runScenario(scenario, skillContent) {
   const system = [
     'You are a helpful AI assistant. The following skill is active and you MUST follow its instructions exactly:',
     '',
     skillContent,
   ].join('\n');
 
-  const response = await client.chat.completions.create({
-    model: MODEL,
-    max_tokens: 1024,
-    messages: [
-      { role: 'system', content: system },
-      { role: 'user',   content: scenario.prompt },
-    ],
-  });
+  const text = await callModel([
+    { role: 'system', content: system },
+    { role: 'user',   content: scenario.prompt },
+  ]);
 
-  const text = response.choices[0].message.content;
   const failures = [];
-
-  for (const keyword of (scenario.must_contain || [])) {
-    if (!text.toLowerCase().includes(keyword.toLowerCase())) {
-      failures.push(`missing "${keyword}"`);
-    }
+  for (const kw of (scenario.must_contain || [])) {
+    if (!text.toLowerCase().includes(kw.toLowerCase())) failures.push(`missing "${kw}"`);
   }
-  for (const keyword of (scenario.must_not_contain || [])) {
-    if (text.toLowerCase().includes(keyword.toLowerCase())) {
-      failures.push(`forbidden "${keyword}" found`);
-    }
+  for (const kw of (scenario.must_not_contain || [])) {
+    if (text.toLowerCase().includes(kw.toLowerCase())) failures.push(`forbidden "${kw}" found`);
   }
 
   return { passed: failures.length === 0, failures, response: text };
@@ -67,8 +72,8 @@ async function main() {
   const summary = [];
 
   for (const dirName of skillDirs) {
-    const evalsPath  = path.join(SKILLS_DIR, dirName, 'evals.json');
-    const skillPath  = path.join(SKILLS_DIR, dirName, 'SKILL.md');
+    const evalsPath = path.join(SKILLS_DIR, dirName, 'evals.json');
+    const skillPath = path.join(SKILLS_DIR, dirName, 'SKILL.md');
 
     if (!fs.existsSync(evalsPath)) {
       console.log(`  -  ${dirName}  (no evals.json, skipping)`);
@@ -85,7 +90,7 @@ async function main() {
       process.stdout.write(`     ${scenario.name} ... `);
 
       try {
-        const result = await runScenario(dirName, scenario, skillContent);
+        const result = await runScenario(scenario, skillContent);
         if (result.passed) {
           totalPassed++;
           console.log('PASS');
@@ -93,7 +98,7 @@ async function main() {
           totalFailed++;
           console.log(`FAIL — ${result.failures.join(', ')}`);
           if (process.env.EVAL_VERBOSE) {
-            console.log('     Response:', result.response.slice(0, 300));
+            console.log(`       Response: ${result.response.slice(0, 300)}`);
           }
         }
         summary.push({ skill: dirName, scenario: scenario.name, passed: result.passed, failures: result.failures });
@@ -109,10 +114,9 @@ async function main() {
 
   if (process.env.GITHUB_STEP_SUMMARY) {
     const lines = [
-      `## Skill Evals`,
-      '',
-      `| Skill | Scenario | Result |`,
-      `|-------|----------|--------|`,
+      '## Skill Evals', '',
+      '| Skill | Scenario | Result |',
+      '|-------|----------|--------|',
       ...summary.map(r =>
         `| ${r.skill} | ${r.scenario} | ${r.passed ? 'PASS' : `FAIL: ${r.failures.join(', ')}`} |`
       ),
