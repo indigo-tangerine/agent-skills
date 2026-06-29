@@ -18,6 +18,8 @@ jobs:
   evals:
     name: LLM behavioral evals
     runs-on: ubuntu-latest
+    permissions:
+      models: read
 
     steps:
       - uses: actions/checkout@v4
@@ -33,7 +35,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           EVAL_MODEL: gpt-4o-mini
-          GITHUB_STEP_SUMMARY: ${{ env.GITHUB_STEP_SUMMARY }}
         run: |
           SKILL="${{ github.event.inputs.skill }}"
           if [ -n "$SKILL" ]; then
