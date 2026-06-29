@@ -80,6 +80,7 @@ these are the indirect dependencies most likely to break.
 ### 4d. Interface and contract changes
 
 Look for:
+
 - Changed function/method signatures or return types
 - Added, removed, or renamed exported symbols
 - Changed API endpoint paths, verbs, or request/response shapes
