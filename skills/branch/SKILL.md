@@ -1,3 +1,8 @@
+---
+name: branch
+description: Create a feature branch from a ticket ID. Fetches and pulls main first, then creates a branch named <ticket-id>-<short-description>.
+---
+
 # Create Feature Branch
 1. Run `pwd` to confirm correct repo
 2. Run `git fetch origin && git checkout main && git pull origin main`

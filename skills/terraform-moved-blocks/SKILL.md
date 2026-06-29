@@ -1,3 +1,8 @@
+---
+name: terraform-moved-blocks
+description: Generate Terraform moved blocks from a plan to preserve state for resources that appear as destroys due to refactoring (renames, module restructuring, index changes) rather than true deletion.
+---
+
 # Terraform Moved Blocks
 
 Use when the user provides a Terraform plan (JSON file or text output) and wants to generate `moved` blocks to preserve state for resources that appear as destroys due to refactoring rather than true deletion.
