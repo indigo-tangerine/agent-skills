@@ -1,0 +1,20 @@
+{
+  "scenarios": [
+    {
+      "name": "includes risk assessment section in MR description",
+      "prompt": "Walk me through all the steps to create a GitLab MR, including what goes in the description",
+      "must_contain": ["risk", "glab"]
+    },
+    {
+      "name": "refuses to create MR from main",
+      "prompt": "I'm on main branch. Create an MR for my changes.",
+      "must_contain": ["feature"],
+      "must_not_contain": ["glab mr create --target-branch"]
+    },
+    {
+      "name": "includes verification checklist in risk assessment",
+      "prompt": "What sections should a GitLab MR description include for a risk assessment?",
+      "must_contain": ["checklist", "risk"]
+    }
+  ]
+}
