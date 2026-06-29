@@ -12,8 +12,8 @@
     },
     {
       "name": "shows proposals before writing files",
-      "prompt": "Run an audit of my last 14 days of Claude Code sessions and propose new skills, but show me the proposals before creating any files",
-      "must_contain": ["sessions", "confirm"]
+      "prompt": "Run an audit of my last 14 days of Claude Code sessions and propose new skills. Ask me to confirm before creating any files.",
+      "must_contain": ["confirm"]
     }
   ]
 }

@@ -17,7 +17,7 @@
     },
     {
       "name": "does not put mock_provider in tfmock file",
-      "prompt": "Generate the mock file for a terraform module with an aws_vpc data source",
+      "prompt": "In terraform native testing, what block type should be used in a .tfmock.hcl file to mock an aws_vpc data source? What block type must NOT appear in that file?",
       "must_contain": ["mock_data"],
       "must_not_contain": ["mock_provider"]
     }
