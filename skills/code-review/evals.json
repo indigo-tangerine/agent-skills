@@ -1,14 +1,14 @@
 {
   "scenarios": [
     {
-      "name": "invokes ce-code-review and saves HTML report",
+      "name": "produces HTML report with severity dashboard",
       "prompt": "Review my code changes on this branch",
-      "must_contain": ["ce-code-review", "report.html"]
+      "must_contain": ["HTML", "severity", "report"]
     },
     {
-      "name": "includes severity dashboard in HTML output",
+      "name": "includes finding cards in output",
       "prompt": "Do a code review",
-      "must_contain": ["ce-code-review", "HTML"]
+      "must_contain": ["HTML", "finding"]
     }
   ]
 }

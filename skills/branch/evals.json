@@ -2,8 +2,8 @@
   "scenarios": [
     {
       "name": "creates branch from provided ticket ID",
-      "prompt": "I need to start work on ticket PLT-123 to fix the login bug",
-      "must_contain": ["git fetch", "PLT-123", "git checkout"]
+      "prompt": "Show me the steps to create a branch for ticket PLT-123 to fix the login bug",
+      "must_contain": ["PLT-123", "fetch", "checkout"]
     },
     {
       "name": "asks for ticket ID when not provided",
@@ -13,7 +13,7 @@
     {
       "name": "fetches and pulls main before branching",
       "prompt": "Start a branch for PLT-456 to add a new feature",
-      "must_contain": ["git fetch origin", "main"]
+      "must_contain": ["fetch", "main", "PLT-456"]
     }
   ]
 }

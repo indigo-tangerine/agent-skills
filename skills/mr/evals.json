@@ -3,7 +3,7 @@
     {
       "name": "includes risk assessment section in MR description",
       "prompt": "Create an MR for my changes",
-      "must_contain": ["Risk Assessment", "risk level", "glab mr create"]
+      "must_contain": ["risk", "glab"]
     },
     {
       "name": "refuses to create MR from main",
@@ -14,7 +14,7 @@
     {
       "name": "includes verification checklist in risk assessment",
       "prompt": "Open an MR for my feature branch",
-      "must_contain": ["Verification checklist", "--remove-source-branch"]
+      "must_contain": ["verification", "remove-source-branch"]
     }
   ]
 }

@@ -1,14 +1,14 @@
 {
   "scenarios": [
     {
-      "name": "invokes ce-plan with html output flag",
+      "name": "produces HTML implementation plan",
       "prompt": "Create a plan for adding user authentication to my Rails app",
-      "must_contain": ["ce-plan", "output:html"]
+      "must_contain": ["HTML", "plan"]
     },
     {
-      "name": "passes user request through to ce-plan unchanged",
+      "name": "includes UI mockups and data flow in output",
       "prompt": "Plan a dark mode toggle feature for the settings page",
-      "must_contain": ["ce-plan"]
+      "must_contain": ["HTML", "mockup"]
     }
   ]
 }
