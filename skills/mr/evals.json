@@ -8,7 +8,7 @@
     {
       "name": "refuses to create MR from main",
       "prompt": "I'm on main branch. Create an MR for my changes.",
-      "must_contain": ["main"],
+      "must_contain": ["feature"],
       "must_not_contain": ["glab mr create --target-branch"]
     },
     {

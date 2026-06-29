@@ -3,7 +3,7 @@
     {
       "name": "searches recent sessions and installed skills",
       "prompt": "Audit my Claude Code usage patterns based on recent sessions to find automatable workflows",
-      "must_contain": ["sessions", "patterns"]
+      "must_contain": ["sessions", "workflows"]
     },
     {
       "name": "requires evidence before proposing a new skill",
@@ -13,7 +13,7 @@
     {
       "name": "shows proposals before writing files",
       "prompt": "Run an audit of my last 14 days of Claude Code sessions and propose new skills, but show me the proposals before creating any files",
-      "must_contain": ["confirm", "proposal"]
+      "must_contain": ["review", "proposal"]
     }
   ]
 }
