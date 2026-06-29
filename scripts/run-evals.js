@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 'use strict';
 
-const Anthropic = require('@anthropic-ai/sdk');
-const fs        = require('fs');
-const path      = require('path');
+const { OpenAI } = require('openai');
+const fs         = require('fs');
+const path       = require('path');
 
 const SKILLS_DIR = path.resolve(__dirname, '..', 'skills');
-const MODEL      = process.env.EVAL_MODEL || 'claude-haiku-4-5-20251001';
-const client     = new Anthropic();
+const MODEL      = process.env.EVAL_MODEL || 'gpt-4o-mini';
+const client     = new OpenAI({
+  baseURL: 'https://models.inference.ai.azure.com',
+  apiKey:  process.env.GITHUB_TOKEN,
+});
 
 const FILTER = process.argv[2]; // optional: node run-evals.js <skill-name>
 
@@ -18,14 +21,16 @@ async function runScenario(skillName, scenario, skillContent) {
     skillContent,
   ].join('\n');
 
-  const response = await client.messages.create({
+  const response = await client.chat.completions.create({
     model: MODEL,
     max_tokens: 1024,
-    system,
-    messages: [{ role: 'user', content: scenario.prompt }],
+    messages: [
+      { role: 'system', content: system },
+      { role: 'user',   content: scenario.prompt },
+    ],
   });
 
-  const text = response.content[0].text;
+  const text = response.choices[0].message.content;
   const failures = [];
 
   for (const keyword of (scenario.must_contain || [])) {
@@ -43,8 +48,8 @@ async function runScenario(skillName, scenario, skillContent) {
 }
 
 async function main() {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.error('ERROR: ANTHROPIC_API_KEY is not set');
+  if (!process.env.GITHUB_TOKEN) {
+    console.error('ERROR: GITHUB_TOKEN is not set');
     process.exit(1);
   }
 

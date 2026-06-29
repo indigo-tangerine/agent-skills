@@ -31,8 +31,8 @@ jobs:
 
       - name: Run evals
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          EVAL_MODEL: claude-haiku-4-5-20251001
+          GITHUB_TOKEN: ${{ github.token }}
+          EVAL_MODEL: gpt-4o-mini
           GITHUB_STEP_SUMMARY: ${{ env.GITHUB_STEP_SUMMARY }}
         run: |
           SKILL="${{ github.event.inputs.skill }}"

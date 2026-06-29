@@ -7,6 +7,6 @@
     "evals": "node scripts/run-evals.js"
   },
   "devDependencies": {
-    "@anthropic-ai/sdk": "^0.55.0"
+    "openai": "^4.0.0"
   }
 }
