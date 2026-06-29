@@ -1,0 +1,14 @@
+{
+  "scenarios": [
+    {
+      "name": "produces a structured HTML code review report",
+      "prompt": "I want you to review my code changes on this branch and produce a report",
+      "must_contain": ["report", "issues"]
+    },
+    {
+      "name": "includes finding cards in the output",
+      "prompt": "Run a code review and describe what the output will include",
+      "must_contain": ["HTML", "finding"]
+    }
+  ]
+}
