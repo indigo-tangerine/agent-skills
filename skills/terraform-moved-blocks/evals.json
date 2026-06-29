@@ -13,7 +13,7 @@
     {
       "name": "flags true deletes and asks for confirmation",
       "prompt": "Here is my plan: aws_iam_role.deprecated will be destroyed.",
-      "must_contain": ["intentional"]
+      "must_contain": ["confirm", "destroy"]
     }
   ]
 }
