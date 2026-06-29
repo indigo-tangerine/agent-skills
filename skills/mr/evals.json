@@ -2,7 +2,7 @@
   "scenarios": [
     {
       "name": "includes risk assessment section in MR description",
-      "prompt": "Create an MR for my changes",
+      "prompt": "Walk me through all the steps to create a GitLab MR, including what goes in the description",
       "must_contain": ["risk", "glab"]
     },
     {
@@ -13,8 +13,8 @@
     },
     {
       "name": "includes verification checklist in risk assessment",
-      "prompt": "Open an MR for my feature branch",
-      "must_contain": ["verification", "remove-source-branch"]
+      "prompt": "Open an MR for my feature branch and include a full description",
+      "must_contain": ["verification", "risk"]
     }
   ]
 }

@@ -10,7 +10,7 @@ const ENDPOINT   = 'https://models.inference.ai.azure.com/chat/completions';
 
 const FILTER = process.argv[2];
 
-async function callModel(messages) {
+async function callModel(messages, attempt = 0) {
   const res = await fetch(ENDPOINT, {
     method: 'POST',
     headers: {
@@ -19,6 +19,15 @@ async function callModel(messages) {
     },
     body: JSON.stringify({ model: MODEL, max_tokens: 1024, messages }),
   });
+
+  if (res.status === 429 && attempt < 4) {
+    const body = await res.text().catch(() => '{}');
+    const match = body.match(/wait (\d+) seconds/);
+    const waitSecs = match ? parseInt(match[1]) + 2 : 35;
+    process.stdout.write(`[rate limited, waiting ${waitSecs}s] `);
+    await new Promise(r => setTimeout(r, waitSecs * 1000));
+    return callModel(messages, attempt + 1);
+  }
 
   if (!res.ok) {
     const body = await res.text().catch(() => '(no body)');

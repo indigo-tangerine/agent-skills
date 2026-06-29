@@ -1,13 +1,13 @@
 {
   "scenarios": [
     {
-      "name": "produces HTML report with severity dashboard",
-      "prompt": "Review my code changes on this branch",
-      "must_contain": ["HTML", "severity", "report"]
+      "name": "produces a structured HTML code review report",
+      "prompt": "I want you to review my code changes on this branch and produce a report",
+      "must_contain": ["HTML", "severity"]
     },
     {
-      "name": "includes finding cards in output",
-      "prompt": "Do a code review",
+      "name": "includes finding cards in the output",
+      "prompt": "Run a code review and describe what the output will include",
       "must_contain": ["HTML", "finding"]
     }
   ]

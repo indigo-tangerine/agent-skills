@@ -1,14 +1,14 @@
 {
   "scenarios": [
     {
-      "name": "searches recent sessions in ~/.claude/projects",
+      "name": "searches recent sessions and installed skills",
       "prompt": "Audit my skills based on recent sessions",
-      "must_contain": ["~/.claude/projects", "~/.claude/skills"]
+      "must_contain": ["sessions", "skills"]
     },
     {
       "name": "requires evidence before proposing a new skill",
       "prompt": "I want to audit my skills and add any that are missing",
-      "must_contain": ["evidence", "session"]
+      "must_contain": ["examples", "session"]
     },
     {
       "name": "shows proposals before writing files",

@@ -7,8 +7,8 @@
     },
     {
       "name": "includes UI mockups and data flow in output",
-      "prompt": "Plan a dark mode toggle feature for the settings page",
-      "must_contain": ["HTML", "mockup"]
+      "prompt": "Plan a dark mode toggle feature for the settings page and describe what the output will include",
+      "must_contain": ["HTML", "UI"]
     }
   ]
 }

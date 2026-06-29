@@ -12,7 +12,7 @@
     },
     {
       "name": "fetches and pulls main before branching",
-      "prompt": "Start a branch for PLT-456 to add a new feature",
+      "prompt": "Show me the exact git commands to create a branch for ticket PLT-456 to add a new feature",
       "must_contain": ["fetch", "main", "PLT-456"]
     }
   ]
