@@ -32,6 +32,7 @@ result = [var.custom_value, local.default_value][var.custom_value != null ? 0 : 
 ```
 
 This sidesteps the type-consistency check entirely. Pair with:
+
 - `type = any` on the variable (not `list(any)`) to avoid further type enforcement
 - A null-check condition (`!= null`) rather than `length() > 0`, since the default should be `null` not `[]`
 
@@ -62,6 +63,7 @@ Always invoke the `/mr` skill when creating a GitLab MR — never call `glab mr 
 - Hook **stdout is never shown to the user** — it is captured as context for Claude (injected as a `<system-reminder>`), not displayed in the terminal or UI.
 - `"blocking": true` only controls timing (Claude waits before starting the session); it does **not** make stdout visible to the user.
 - To surface information to the user from a SessionStart hook, emit a JSON `additionalContext` block as the last line of stdout:
+
   ```json
   {
     "hookSpecificOutput": {
@@ -70,6 +72,7 @@ Always invoke the `/mr` skill when creating a GitLab MR — never call `glab mr 
     }
   }
   ```
+
   Claude reads the `additionalContext` string from the `<system-reminder>` injected at session start and presents it to the user in its opening message.
 - To inspect the raw value, ask Claude: _"What did the SessionStart hook report?"_ — Claude will quote or paraphrase it from its system context.
 - **stderr** is only shown to the user on non-zero exit (as a hook error notice). Do not add ANSI codes or spinners to hook stdout — they are invisible to users and pollute the context injected into Claude.
@@ -104,10 +107,12 @@ When running `/init` or creating a CLAUDE.md for any project:
 
 1. Scan the repo for a documentation folder (`docs/`, `documentation/`, `doc/`, or similar).
 2. If one exists, include a **Documentation Index** section in CLAUDE.md listing each file with a one-line description inferred from the file name or first heading. Use a compact format:
+
    ```markdown
    ## Documentation (`docs/`)
    - `docs/architecture.md` — System architecture overview
    - `docs/api.md` — API reference and endpoint catalogue
    ```
+
 3. Keep CLAUDE.md itself lightweight — reference doc files by path, never inline their content. The index is the pointer, not the document.
 4. If no docs folder exists yet, add a placeholder comment: `<!-- No docs/ folder found; add one and re-run /init to populate this index. -->`

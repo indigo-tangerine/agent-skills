@@ -10,12 +10,14 @@ Generates a complete `terraform test` suite for a Terraform **module**. Covers m
 ## When to Use This Skill
 
 **Activate when:**
+
 - Writing tests for a Terraform module (reusable component, not root infrastructure)
 - Setting up `tests/` directory structure from scratch
 - Adding validation or integration test coverage to an existing module
 - User specifies a testing level: `basic` or `advanced`
 
 **Do not use for:**
+
 - Root infrastructure configurations (env-specific Terraform applying real state)
 - Terratest / Go-based testing
 - Testing compositions or infrastructure modules
@@ -43,6 +45,7 @@ Read these files from the module directory before writing any tests:
 4. `versions.tf` (if present) — confirm Terraform version supports native testing (>= 1.6) and mocking (>= 1.7)
 
 Build a mental model:
+
 - Which variables have validation blocks? → need `expect_failures` tests
 - Which variables have defaults? → don't assume computed logic; test the actual default
 - Which outputs reference computed attributes (IDs, ARNs, generated names)? → need `command = apply`
@@ -70,7 +73,7 @@ If `tflint` reports unused variables, data sources, or resources — remove them
 
 ### Basic Level
 
-```
+```text
 <module>/
 └── tests/
     ├── mocks/
@@ -81,7 +84,7 @@ If `tflint` reports unused variables, data sources, or resources — remove them
 
 ### Advanced Level
 
-```
+```text
 <module>/
 └── tests/
     ├── mocks/

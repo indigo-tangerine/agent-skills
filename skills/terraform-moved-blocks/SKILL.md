@@ -15,12 +15,14 @@ Use when the user provides a Terraform plan (JSON file or text output) and wants
    - **Refactor**: address changed due to rename, module restructuring, or index change — write a `moved` block.
    - Common refactor signals: `this` → `this[0]`, no index → indexed, module path restructuring, resource rename.
 3. Write `moved` blocks to `moved.tf` in the relevant module root:
+
    ```hcl
    moved {
      from = <old_address>
      to   = <new_address>
    }
    ```
+
 4. Count coverage: report how many `delete` actions were in the plan vs how many `moved` blocks were written.
 5. Flag any destroys that could not be matched and ask the user to confirm they are intentional.
 

@@ -62,6 +62,7 @@ Group changed files by type and note the change volume:
 ### 4b. Direct dependencies
 
 Scan import/require/use statements in each changed file to identify:
+
 - External packages or libraries being added, removed, or version-changed
 - Internal modules, services, or utilities that the changed code calls into
 
@@ -118,7 +119,7 @@ Look for:
 Construct the full description as a string and pass it via `--description`.
 Do not use `--fill` as it does not include the risk section.
 
-```
+```markdown
 ## Summary
 
 <what this MR does and why — 2-4 sentences>

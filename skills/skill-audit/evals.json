@@ -2,19 +2,18 @@
   "scenarios": [
     {
       "name": "searches recent sessions and installed skills",
-      "prompt": "Audit my skills based on recent sessions",
-      "must_contain": ["sessions", "skills"]
+      "prompt": "Audit my Claude Code usage patterns based on recent sessions to find automatable workflows",
+      "must_contain": ["sessions", "patterns"]
     },
     {
       "name": "requires evidence before proposing a new skill",
-      "prompt": "I want to audit my skills and add any that are missing",
-      "must_contain": ["examples", "session"]
+      "prompt": "I want to audit my recent sessions and propose new automation skills for repeated workflows",
+      "must_contain": ["repeated", "session"]
     },
     {
       "name": "shows proposals before writing files",
-      "prompt": "Run a skill audit on the last 14 days of sessions",
-      "must_contain": ["SKILL.md"],
-      "must_not_contain": ["mkdir -p ~/.claude/skills"]
+      "prompt": "Run an audit of my last 14 days of Claude Code sessions and propose new skills, but show me the proposals before creating any files",
+      "must_contain": ["confirm", "proposal"]
     }
   ]
 }

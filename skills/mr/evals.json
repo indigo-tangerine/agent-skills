@@ -13,8 +13,8 @@
     },
     {
       "name": "includes verification checklist in risk assessment",
-      "prompt": "Open an MR for my feature branch and include a full description",
-      "must_contain": ["verification", "risk"]
+      "prompt": "What sections should a GitLab MR description include for a risk assessment?",
+      "must_contain": ["checklist", "risk"]
     }
   ]
 }

@@ -7,13 +7,13 @@
     },
     {
       "name": "generates mock file in tests/mocks directory",
-      "prompt": "Write basic tests for the module at terraform/modules/s3",
-      "must_contain": ["tfmock", "mock_data"]
+      "prompt": "Write basic tests for the terraform module at terraform/modules/s3. Describe the file structure including any mock files.",
+      "must_contain": ["mock", "tests"]
     },
     {
       "name": "uses command=apply for outputs",
-      "prompt": "Write integration tests for a terraform module that has outputs referencing computed IDs",
-      "must_contain": ["apply"]
+      "prompt": "In terraform test files, when testing module outputs that reference computed attributes like IDs, what value should the command field be set to?",
+      "must_contain": ["apply", "outputs"]
     },
     {
       "name": "does not put mock_provider in tfmock file",

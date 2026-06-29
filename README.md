@@ -4,7 +4,7 @@ Personal Claude Code skills, global config, and plugin reinstall guide.
 
 ## What's here
 
-```
+```text
 skills/           Personal skills — copied to ~/.claude/skills/ on each machine
   branch/         Create a feature branch from a ticket ID
   code-review/    Rich HTML code review report (wraps ce-code-review)

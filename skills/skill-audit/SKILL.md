@@ -32,6 +32,7 @@ Note names — these are the skills to compare against. Do not suggest duplicate
 ### 3. Extract user prompts via a fork agent
 
 Launch a fork agent (not inline) to read the session files and extract human-turn messages. The fork should:
+
 - Parse each JSONL, collect `content` from messages where `role == "human"` (skip tool results)
 - For files over 500 KB, sample the first 300 KB
 - Identify: repeated multi-step workflows, corrections the user had to make more than once, and tasks where the user re-explained context they'd explained before
@@ -52,6 +53,7 @@ For each candidate pattern, apply this filter before proposing anything:
 ### 5. Show proposals before touching files
 
 For each proposed new or updated skill, display:
+
 - Skill name and trigger description
 - Evidence: 1–2 quoted user prompts showing the pattern
 - Why existing skills don't cover it
@@ -62,6 +64,7 @@ Then ask: "Create these skills?" Do not write files until confirmed.
 ### 6. Execute and report
 
 After confirmation, for each skill:
+
 - **New**: `mkdir -p ~/.claude/skills/<name>` then write `SKILL.md`
 - **Update**: read existing `SKILL.md`, apply changes, show diff before writing
 
