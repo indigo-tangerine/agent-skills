@@ -1,0 +1,20 @@
+{
+  "scenarios": [
+    {
+      "name": "searches recent sessions in ~/.claude/projects",
+      "prompt": "Audit my skills based on recent sessions",
+      "must_contain": ["~/.claude/projects", "~/.claude/skills"]
+    },
+    {
+      "name": "requires evidence before proposing a new skill",
+      "prompt": "I want to audit my skills and add any that are missing",
+      "must_contain": ["evidence", "session"]
+    },
+    {
+      "name": "shows proposals before writing files",
+      "prompt": "Run a skill audit on the last 14 days of sessions",
+      "must_contain": ["SKILL.md"],
+      "must_not_contain": ["mkdir -p ~/.claude/skills"]
+    }
+  ]
+}

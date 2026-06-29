@@ -1,0 +1,14 @@
+{
+  "scenarios": [
+    {
+      "name": "invokes ce-plan with html output flag",
+      "prompt": "Create a plan for adding user authentication to my Rails app",
+      "must_contain": ["ce-plan", "output:html"]
+    },
+    {
+      "name": "passes user request through to ce-plan unchanged",
+      "prompt": "Plan a dark mode toggle feature for the settings page",
+      "must_contain": ["ce-plan"]
+    }
+  ]
+}

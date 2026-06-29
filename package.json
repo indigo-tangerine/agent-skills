@@ -1,0 +1,12 @@
+{
+  "name": "agent-skills",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "validate": "node scripts/validate-skills.js",
+    "evals": "node scripts/run-evals.js"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "^0.55.0"
+  }
+}

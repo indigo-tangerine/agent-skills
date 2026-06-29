@@ -1,0 +1,25 @@
+{
+  "scenarios": [
+    {
+      "name": "asks for module path when not provided",
+      "prompt": "Write tests for my terraform module",
+      "must_contain": ["module", "path"]
+    },
+    {
+      "name": "generates mock file at correct path",
+      "prompt": "Write basic tests for the module at terraform/modules/s3",
+      "must_contain": ["tests/mocks/all.tfmock.hcl", "mock_provider"]
+    },
+    {
+      "name": "uses command=apply for outputs",
+      "prompt": "Write integration tests for a terraform module that has outputs referencing computed IDs",
+      "must_contain": ["command = apply"]
+    },
+    {
+      "name": "does not put mock_provider in tfmock file",
+      "prompt": "Generate the mock file for a terraform module with an aws_vpc data source",
+      "must_contain": ["mock_data"],
+      "must_not_contain": ["mock_provider"]
+    }
+  ]
+}

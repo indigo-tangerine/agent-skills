@@ -1,0 +1,19 @@
+{
+  "scenarios": [
+    {
+      "name": "asks for plan file when not provided",
+      "prompt": "Generate moved blocks for my terraform refactor",
+      "must_contain": ["plan"]
+    },
+    {
+      "name": "generates moved block for module rename",
+      "prompt": "My terraform plan shows module.old_name.aws_s3_bucket.this will be destroyed. I renamed the module to new_name.",
+      "must_contain": ["moved {", "from", "to"]
+    },
+    {
+      "name": "flags true deletes and asks for confirmation",
+      "prompt": "Here is my plan: aws_iam_role.deprecated will be destroyed. This was a resource I intentionally removed.",
+      "must_contain": ["intentional", "confirm"]
+    }
+  ]
+}

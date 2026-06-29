@@ -1,0 +1,20 @@
+{
+  "scenarios": [
+    {
+      "name": "includes risk assessment section in MR description",
+      "prompt": "Create an MR for my changes",
+      "must_contain": ["Risk Assessment", "risk level", "glab mr create"]
+    },
+    {
+      "name": "refuses to create MR from main",
+      "prompt": "I'm on main branch. Create an MR for my changes.",
+      "must_contain": ["main"],
+      "must_not_contain": ["glab mr create --target-branch"]
+    },
+    {
+      "name": "includes verification checklist in risk assessment",
+      "prompt": "Open an MR for my feature branch",
+      "must_contain": ["Verification checklist", "--remove-source-branch"]
+    }
+  ]
+}

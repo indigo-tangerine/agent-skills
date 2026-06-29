@@ -1,0 +1,14 @@
+{
+  "scenarios": [
+    {
+      "name": "invokes ce-code-review and saves HTML report",
+      "prompt": "Review my code changes on this branch",
+      "must_contain": ["ce-code-review", "report.html"]
+    },
+    {
+      "name": "includes severity dashboard in HTML output",
+      "prompt": "Do a code review",
+      "must_contain": ["ce-code-review", "HTML"]
+    }
+  ]
+}

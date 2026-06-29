@@ -1,0 +1,21 @@
+{
+  "scenarios": [
+    {
+      "name": "writes explicit title and description for terraform changes",
+      "prompt": "I've edited some .tf and .tfvars files. Commit and open an MR.",
+      "must_contain": ["--title", "--description"],
+      "must_not_contain": ["--fill"]
+    },
+    {
+      "name": "uses --fill for non-terraform changes",
+      "prompt": "I've updated the README.md. Commit and open an MR.",
+      "must_contain": ["--fill"]
+    },
+    {
+      "name": "refuses to run on main branch",
+      "prompt": "I'm on main. Commit my changes and open an MR.",
+      "must_contain": ["main"],
+      "must_not_contain": ["glab mr create"]
+    }
+  ]
+}
