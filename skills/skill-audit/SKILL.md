@@ -1,3 +1,8 @@
+---
+name: skill-audit
+description: Audits recent Claude Code sessions for personal skill opportunities. Recommends new or updated skills based on evidence of repeated workflows, corrections, or friction. Personal skills only — never edits repo-level .claude/ files.
+---
+
 # Skill Audit
 
 Audits recent Claude Code sessions for personal skill opportunities. Recommends new or updated skills based on evidence of repeated workflows, corrections, or friction. Does not touch repo skills unless explicitly asked.
