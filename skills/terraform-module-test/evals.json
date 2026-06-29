@@ -1,0 +1,25 @@
+{
+  "scenarios": [
+    {
+      "name": "asks for module path when not provided",
+      "prompt": "Write tests for my terraform module",
+      "must_contain": ["module", "path"]
+    },
+    {
+      "name": "generates mock file in tests/mocks directory",
+      "prompt": "Write basic tests for the terraform module at terraform/modules/s3. Describe the file structure including any mock files.",
+      "must_contain": ["mock", "tests"]
+    },
+    {
+      "name": "uses command=apply for outputs",
+      "prompt": "In terraform test files, when testing module outputs that reference computed attributes like IDs, what value should the command field be set to?",
+      "must_contain": ["apply", "outputs"]
+    },
+    {
+      "name": "does not put mock_provider in tfmock file",
+      "prompt": "In terraform native testing, what block type should be used in a .tfmock.hcl file to mock an aws_vpc data source? What block type must NOT appear in that file?",
+      "must_contain": ["mock_data"],
+      "must_not_contain": ["mock_provider"]
+    }
+  ]
+}

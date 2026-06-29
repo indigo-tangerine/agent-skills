@@ -1,0 +1,41 @@
+---
+name: Skill Evals
+
+on:
+  pull_request:
+    paths:
+      - 'skills/**/SKILL.md'
+      - 'skills/**/evals.json'
+      - 'scripts/run-evals.js'
+  workflow_dispatch:
+    inputs:
+      skill:
+        description: 'Run evals for a single skill (leave blank for all)'
+        required: false
+        default: ''
+
+jobs:
+  evals:
+    name: LLM behavioral evals
+    runs-on: ubuntu-latest
+    permissions:
+      models: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Run evals
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          EVAL_MODEL: gpt-4o-mini
+        run: |
+          SKILL="${{ github.event.inputs.skill }}"
+          if [ -n "$SKILL" ]; then
+            node scripts/run-evals.js "$SKILL"
+          else
+            node scripts/run-evals.js
+          fi

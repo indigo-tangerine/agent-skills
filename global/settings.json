@@ -1,0 +1,207 @@
+{
+  "env": {
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "16384",
+    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
+    "MAX_THINKING_TOKENS": "8192",
+    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
+    "CLAUDE_CODE_FORK_SUBAGENT": "1",
+    "ANTHROPIC_MODEL": "claude-sonnet-4-6",
+    "ANTHROPIC_SMALL_FAST_MODEL": "claude-haiku-4-6",
+    "AI_SESSION_CRED_TTL_SECONDS": "28800"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(git checkout:*)",
+      "Bash(grep:*)",
+      "Bash(terraform validate:*)",
+      "Bash(terraform plan:*)",
+      "Bash(ls:*)",
+      "Bash(rg:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(jq:*)",
+      "Bash(cat:*)",
+      "Bash(mkdir:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(find:*)",
+      "Bash(xargs ls *)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git clone:*)",
+      "WebFetch(domain:docs.gitlab.com)",
+      "Bash(tflint:*)",
+      "Bash(yamllint:*)",
+      "Bash(rtk git pull:*)",
+      "Bash(rtk git fetch:*)",
+      "Bash(rtk git checkout:*)",
+      "Bash(rtk grep:*)",
+      "Bash(rtk terraform validate:*)",
+      "Bash(rtk terraform plan:*)",
+      "Bash(rtk ls:*)",
+      "Bash(rtk rg:*)",
+      "Bash(rtk git status:*)",
+      "Bash(rtk git diff:*)",
+      "Bash(rtk git log:*)",
+      "Bash(rtk jq:*)",
+      "Bash(rtk cat:*)",
+      "Bash(rtk mkdir:*)",
+      "Bash(rtk head:*)",
+      "Bash(rtk tail:*)",
+      "Bash(rtk find:*)",
+      "Bash(rtk xargs ls *)",
+      "Bash(rtk git add:*)",
+      "Bash(rtk git commit:*)",
+      "Bash(rtk git clone:*)",
+      "Bash(rtk tflint:*)",
+      "Bash(rtk yamllint:*)",
+      "Bash(rtk read *)",
+      "Bash(rtk gain *)"
+    ]
+  },
+  "model": "opus",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash(git commit:*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git diff --cached --name-only | grep '\\.yml$' | xargs -r yamllint"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); [[ -z \"$f\" ]] && exit 0; if [[ \"$f\" == *\".gitlab-ci.yml\" ]] || [[ \"$f\" =~ /templates/[^/]+\\.yml$ ]] || [[ \"$f\" =~ ^templates/[^/]+\\.yml$ ]]; then glab ci lint \"$f\" || exit 2; fi",
+            "statusMessage": "Linting CI/CD YAML..."
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/session-repo-check.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r .prompt | grep -qE 'sk-ant-[A-Za-z0-9-]{20,}|sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{36}|glpat-[A-Za-z0-9_-]{20,}|AKIA[0-9A-Z]{16}|vcp_[A-Za-z0-9]{24,}' && printf '{\"continue\":false,\"stopReason\":\"Possible secret detected in prompt — sending blocked.\"}' || true"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "agent-skills@addy-agent-skills": true,
+    "gitkraken-hooks@gitkraken": true,
+    "plg-core@plg": true,
+    "plg-infra@plg": true,
+    "plg-ops@plg": true,
+    "plg-tools@plg": true,
+    "python-development@local": true,
+    "compound-engineering@compound-engineering-plugin": true,
+    "terraform-skill@antonbabenko": true,
+    "skill-creator@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "github@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "addy-agent-skills": {
+      "source": {
+        "source": "directory",
+        "path": "MACHINE_SPECIFIC_PATH/agent-skills/agent-skills"
+      }
+    },
+    "gitkraken": {
+      "source": {
+        "source": "directory",
+        "path": "MACHINE_SPECIFIC_PATH/.claude/plugins/marketplaces/gitkraken"
+      }
+    },
+    "hashicorp": {
+      "source": {
+        "source": "github",
+        "repo": "hashicorp/agent-skills"
+      }
+    },
+    "local": {
+      "source": {
+        "source": "directory",
+        "path": "MACHINE_SPECIFIC_PATH/agent-skills/python-development"
+      }
+    },
+    "plg": {
+      "source": {
+        "source": "directory",
+        "path": "MACHINE_SPECIFIC_PATH/plg-tech/plg/knowledge/plg-agent-skills"
+      }
+    },
+    "compound-engineering-plugin": {
+      "source": {
+        "source": "github",
+        "repo": "EveryInc/compound-engineering-plugin"
+      }
+    },
+    "antonbabenko": {
+      "source": {
+        "source": "github",
+        "repo": "antonbabenko/agent-plugins"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "autoUpdatesChannel": "stable",
+  "skipWorkflowUsageWarning": true,
+  "claudeDev.model": "claude-sonnet-4-6",
+  "mcpServers": {
+    "terraform": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "hashicorp/terraform-mcp-server"
+      ]
+    },
+    "tavily-remote": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.tavily.com/mcp/?tavilyApiKey=YOUR_TAVILY_API_KEY"
+      ]
+    }
+  }
+}

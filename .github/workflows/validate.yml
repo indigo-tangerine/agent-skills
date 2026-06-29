@@ -1,0 +1,37 @@
+---
+name: Validate Skills
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Structural validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Validate skill structure and frontmatter
+        run: npm run validate
+
+      - name: Lint markdown
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: |
+            skills/**/*.md
+            global/*.md
+            README.md
+            plugins.md
+          config: .markdownlint.json
+        continue-on-error: true
